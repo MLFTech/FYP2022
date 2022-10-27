@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="server/index.js" />
+    <title>FYP 2</title>
+  </head>
+  <body>
+    <div id="container">
+      <p>FYP: HOME AUTOMATION SYSTEM</p>
+      <span style="font-size: 25px">BULB: </span>
+      <span class="onOff">OFF</span>
+      <input type="checkbox" />
+    </div>
+
+    <script>
+      var connect = new WebSocket("wss://localhost:8080");
+
+      // const toggle = document.querySelector("#container input");
+      const toggle = document.querySelector("#container input");
+
+      toggle.addEventListener("click", () => {
+        const onOFF = toggle.parentNode.querySelector(".onOff");
+        onOFF.textContent = toggle.checked ? "ON" : "OFF";
+
+        var button1_status = 0;
+
+        function button1_on() {
+          button1_status = 1;
+          console.log("LED 1 is on");
+          dataSend();
+        }
+        function button1_off() {
+          button1_status = 0;
+          console.log("LED 1 is off");
+          dataSend();
+        }
+
+        function dataSend() {
+          var data = '{"LED1":' + button1_status + "}";
+          connect.send(data);
+        }
+
+        if (toggle.checked) {
+          button1_on();
+        } else {
+          button1_off();
+        }
+      });
+    </script>
+  </body>
+</html>
