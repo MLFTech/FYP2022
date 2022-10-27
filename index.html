@@ -18,7 +18,7 @@
         const toggle = document.querySelector('#container input');
         // const toggle = document.getElementById('switch input');
 
-            var connection = new WebSocket('ws://' + location.hostname + ':81');
+            var connection = new WebSocket('wss://' + location.hostname + ':81');
 
         toggle.addEventListener('click', () => {
                 const onOFF = toggle.parentNode.querySelector('#onOff');
